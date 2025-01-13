@@ -1,0 +1,28 @@
+name: StaffPlusPlus
+version: '1.0-SNAPSHOT'
+main: me.claymanatee.staffPlusPlus.StaffPlusPlus
+api-version: '1.0'
+depend: [Parties]
+commands:
+  staffchat:
+    usage: /<command>
+    aliases:
+      - sch
+      - schat
+  stafflist:
+    usage: /<command>
+    aliases:
+      - sl
+  staffdelete:
+    usage: /<command> [name]
+  staffroster:
+    usage: /<command>
+  staffpurge:
+    usage: /<command>
+permissions:
+  staffplusplus.staffchat:
+    description: Allows usage of /staffchat and /stafflist commands
+    default: false
+  staffplusplus.admin:
+    description: Allows usage of /staffdelete and /staffroster commands
+    default: false
