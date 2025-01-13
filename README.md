@@ -15,10 +15,10 @@ A straightforward Bukkit/Spigot plugin to help your server's staff team chat pri
 # Plugin Info
 ### Commands
 - /staffchat (/sch) \<toggle | textcolor | accentcolor\> ...words
-  - Base version - say some words to send messages to other staff members!
-  - /sch toggle will swap you to staff chat - no need to prepend your messages with /sch!
+  - Base version - say some words to send messages to other staff members.
+  - /sch toggle will swap you to staff chat - no need to prepend your messages with /sch.
   - /sch textcolor \<colorcode\> will update your text color; /sch accentcolor \<colorcode\> will do the same with your accent color.
-    - These use basic Bukkit ChatColor characters (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, a, b, c, d, e, f).
+    - These accept basic Bukkit ChatColor characters (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, a, b, c, d, e, f).
 - /stafflist (/sl) will show all online staff!
 - /staffroster is an admin-only command that will show info for all staff (online or not).
 - /staffdelete \<name | uuid\> is a WIP admin-only command to delete the info of a staff member from the database.
