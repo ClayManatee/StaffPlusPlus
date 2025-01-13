@@ -46,19 +46,16 @@ public class StaffDataAccess {
         PreparedStatement statement;
 
         try {
-
             statement = StaffDatabase.getConnection()
-                    .prepareStatement("UPDATE StaffMembers SET StaffUUID = ?, TextColor = ?, AccentColor = ?, StaffChatToggled = ? WHERE StaffID = ?");
-            statement.setString(1, staffMember.getStaffUUID().toString());
-            statement.setString(2, staffMember.getTextColorChar());
-            statement.setString(3, staffMember.getAccentColorChar());
-            statement.setBoolean(4, staffMember.getStaffChatToggled());
-            statement.setInt(5, staffMember.getId());
-
+                    .prepareStatement("UPDATE StaffMembers SET TextColor = ?, AccentColor = ?, StaffChatToggled = ? WHERE StaffID = ?");
+            statement.setString(1, staffMember.getTextColorChar());
+            statement.setString(2, staffMember.getAccentColorChar());
+            statement.setBoolean(3, staffMember.getStaffChatToggled());
+            statement.setInt(4, staffMember.getId());
+            //Bukkit.getLogger().info("[StaffPlusPlus] Executing " + statement);
             statement.executeUpdate();
 
         } catch (SQLException ex) {
-            System.out.println("Error updating staff member info in the database.");
             Bukkit.getLogger().warning("[StaffPlusPlus] Error updating staff member info in the database.");
         }
     }
@@ -75,11 +72,14 @@ public class StaffDataAccess {
             ResultSet found = preparedStatement.executeQuery();
 
             while (found.next()) {
+                //Bukkit.getLogger().info("[StaffPlusPlus] Found staff: T - " + found.getString("TextColor") + "A - " + found.getString("AccentColor"));
                 staffMember = new StaffMember(
                         staffUUID,
                         found.getString("TextColor"),
                         found.getString("AccentColor"),
                         found.getBoolean("StaffChatToggled"));
+                staffMember.setId(found.getInt("StaffID"));
+                //Bukkit.getLogger().info("[StaffPlusPlus] Constructed staff member: " + staffMember);
             }
 
         } catch (SQLException e) {

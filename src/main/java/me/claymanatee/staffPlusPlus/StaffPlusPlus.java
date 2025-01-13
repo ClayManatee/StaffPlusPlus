@@ -1,18 +1,19 @@
 package me.claymanatee.staffPlusPlus;
 
-
-import at.pcgamingfreaks.MarriageMaster.Bukkit.API.MarriageMasterPlugin;
 import me.claymanatee.commands.StaffChatCommand;
 import me.claymanatee.commands.StaffListCommand;
 import me.claymanatee.commands.StaffPurgeCommand;
 import me.claymanatee.commands.StaffRosterCommand;
 import me.claymanatee.database.StaffDataCache;
 import me.claymanatee.database.StaffDatabase;
+import me.claymanatee.expansion.StaffChatExpansion;
 import me.claymanatee.listeners.PlayerChatListener;
 import me.claymanatee.listeners.PlayerGivenPermissionListener;
 import me.claymanatee.listeners.PlayerJoinLeaveListener;
 
 import net.luckperms.api.LuckPerms;
+
+import at.pcgamingfreaks.MarriageMaster.Bukkit.API.MarriageMasterPlugin;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -55,6 +56,10 @@ public final class StaffPlusPlus extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new PlayerChatListener(), this);
 
         new PlayerGivenPermissionListener(luckPerms).register();
+
+        if (Bukkit.getPluginManager().isPluginEnabled("PlaceholderAPI")) {
+            new StaffChatExpansion().register();
+        }
     }
 
     @Override

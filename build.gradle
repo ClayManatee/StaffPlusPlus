@@ -31,6 +31,9 @@ repositories {
         name = 'alessiodp-repo'
         url = 'https://repo.alessiodp.com/releases/'
     }
+    maven {
+        url = 'https://repo.extendedclip.com/releases/'
+    }
 }
 
 dependencies {
@@ -40,6 +43,7 @@ dependencies {
     compileOnly group: 'com.alessiodp.parties', name: 'parties-api', version: '3.2.15'
     testImplementation group: 'com.h2database', name: 'h2', version: '2.2.220'
     compileOnly 'net.luckperms:api:5.4'
+    compileOnly 'me.clip:placeholderapi:2.11.6'
 }
 
 def targetJavaVersion = 21

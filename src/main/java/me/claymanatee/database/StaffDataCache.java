@@ -20,6 +20,7 @@ public class StaffDataCache {
         StaffMember staffMember = StaffDatabase.getStaffDataAccess().findByUUID(staffUUID);
         if (staffMember == null)
         {
+            //Bukkit.getLogger().warning("[StaffPlusPlus] Didn't find staff. Adding new.");
             staffMember = StaffDatabase.getStaffDataAccess().insert(staffUUID);
         }
         onlineStaff.put(staffUUID, staffMember);
