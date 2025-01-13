@@ -2,8 +2,8 @@ package me.claymanatee.utils;
 
 import me.claymanatee.database.StaffDataCache;
 import me.claymanatee.database.StaffMember;
-
 import me.claymanatee.staffPlusPlus.StaffPlusPlus;
+
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 

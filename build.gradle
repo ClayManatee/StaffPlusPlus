@@ -1,7 +1,6 @@
 plugins {
     id 'java'
 }
-
 group = 'me.claymanatee'
 version = '1.0-SNAPSHOT'
 
@@ -24,10 +23,6 @@ repositories {
         url = "https://papermc.io/repo/repository/maven-public/"
     }
     maven {
-        name = "pcgf-repo"
-        url = "https://repo.pcgamingfreaks.at/repository/maven-everything"
-    }
-    maven {
         name = 'alessiodp-repo'
         url = 'https://repo.alessiodp.com/releases/'
     }
@@ -37,9 +32,8 @@ repositories {
 }
 
 dependencies {
-    compileOnly("org.spigotmc:spigot-api:1.21.1-R0.1-SNAPSHOT")
-    compileOnly("net.essentialsx:EssentialsX:2.19.0")
-    compileOnly("at.pcgamingfreaks:MarriageMaster-API-Bukkit:2.4")
+    compileOnly 'org.spigotmc:spigot-api:1.21.1-R0.1-SNAPSHOT'
+    compileOnly 'net.essentialsx:EssentialsX:2.19.0'
     compileOnly group: 'com.alessiodp.parties', name: 'parties-api', version: '3.2.15'
     testImplementation group: 'com.h2database', name: 'h2', version: '2.2.220'
     compileOnly 'net.luckperms:api:5.4'

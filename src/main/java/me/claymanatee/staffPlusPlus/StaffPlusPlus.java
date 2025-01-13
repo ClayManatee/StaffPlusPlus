@@ -13,8 +13,6 @@ import me.claymanatee.listeners.PlayerJoinLeaveListener;
 
 import net.luckperms.api.LuckPerms;
 
-import at.pcgamingfreaks.MarriageMaster.Bukkit.API.MarriageMasterPlugin;
-
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.plugin.Plugin;
@@ -24,7 +22,6 @@ import java.sql.SQLException;
 
 public final class StaffPlusPlus extends JavaPlugin {
 
-    public static MarriageMasterPlugin marriageMasterPlugin;
     private static LuckPerms luckPerms;
     private static final ChatColor errorColor = ChatColor.RED;
     private static StaffPlusPlus plugin;
@@ -41,10 +38,9 @@ public final class StaffPlusPlus extends JavaPlugin {
     @Override
     public void onEnable() {
         plugin = this;
-        loadMarriageMaster();
         luckPerms = getServer().getServicesManager().load(LuckPerms.class);
         url = "jdbc:h2:" + getDataFolder().getAbsolutePath() + "/data/staffplusplus";
-        Bukkit.getLogger().info("[staffplus] DB URL - " + url);
+        Bukkit.getLogger().info("[StaffPlusPlus] DB URL - " + url);
         StaffDatabase.initializeDatabase();
 
         getCommand("staffchat").setExecutor(new StaffChatCommand());
@@ -70,14 +66,6 @@ public final class StaffPlusPlus extends JavaPlugin {
             StaffDatabase.getConnection().close();
         } catch (SQLException e) {
             e.printStackTrace();
-        }
-    }
-
-    public void loadMarriageMaster() {
-        Plugin bukkitPlugin = Bukkit.getPluginManager().getPlugin("MarriageMaster");
-        if(bukkitPlugin instanceof MarriageMasterPlugin) {
-            // Do something if MarriageMaster is not available
-            marriageMasterPlugin = (MarriageMasterPlugin) bukkitPlugin;
         }
     }
 

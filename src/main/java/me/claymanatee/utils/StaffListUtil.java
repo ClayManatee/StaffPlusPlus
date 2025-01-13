@@ -16,11 +16,14 @@ public class StaffListUtil {
     public static void sendOnlineStaffList(StaffMember staffMember) {
         StringBuilder list = new StringBuilder(staffMember.getTextColor() + "---[" + staffMember.getAccentColor() + "Online Staff" + staffMember.getTextColor() + "]---");
         for (StaffMember onlineStaffMember : StaffDataCache.getAllOnlineStaff()){
-            Player staffPlayer = Bukkit.getPlayer(staffMember.getStaffUUID());
+            Player staffPlayer = Bukkit.getPlayer(onlineStaffMember.getStaffUUID());
             if(staffPlayer != null) {
-                String vanishStatus = essentials.getUser(staffPlayer).isHidden() ? ChatColor.RED + "[Vanished]" : ChatColor.GREEN + "[Visible]";
-                String afkStatus = essentials.getUser(staffPlayer).isAfk() ? ChatColor.RED + "[AFK]" : ChatColor.GREEN + "[Active]";
-                String staffMemberInfo = "\n" + staffMember.getTextColor() + " - " + staffMember.getAccentColor() + staffPlayer.getName() + " " + vanishStatus + " " + afkStatus;
+                String staffMemberInfo = "\n" + staffMember.getTextColor() + " - " + staffMember.getAccentColor() + staffPlayer.getName();
+                if (essentials != null) {
+                    String vanishStatus = essentials.getUser(staffPlayer).isHidden() ? ChatColor.RED + "[Vanished]" : ChatColor.GREEN + "[Visible]";
+                    String afkStatus = essentials.getUser(staffPlayer).isAfk() ? ChatColor.RED + "[AFK]" : ChatColor.GREEN + "[Active]";
+                    staffMemberInfo += " " + vanishStatus + " " + afkStatus;
+                }
                 list.append(staffMemberInfo);
             }
         }
@@ -35,7 +38,7 @@ public class StaffListUtil {
         for(StaffMember sm : StaffDataAccess.findAll()){
             Player staffPlayer = Bukkit.getPlayer(sm.getStaffUUID());
             if(staffPlayer != null) {
-                staffRoster.append("\n" + staffMember.getAccentColor() + " - " + staffMember.getTextColor() + staffPlayer.getName() + ", " + staffPlayer.getUniqueId());
+                staffRoster.append("\n" + staffMember.getAccentColor() + " - " + staffMember.getTextColor() + staffPlayer.getName());
             }
         }
         Player staffPlayer = Bukkit.getPlayer(staffMember.getStaffUUID());

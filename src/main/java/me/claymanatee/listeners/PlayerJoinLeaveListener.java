@@ -3,8 +3,8 @@ package me.claymanatee.listeners;
 import me.claymanatee.database.StaffDataCache;
 import me.claymanatee.staffPlusPlus.StaffPlusPlus;
 import me.claymanatee.database.StaffMember;
-
 import me.claymanatee.utils.StaffListUtil;
+
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.event.player.PlayerQuitEvent;
@@ -26,8 +26,6 @@ public class PlayerJoinLeaveListener implements Listener {
         Player player = event.getPlayer();
         if (player.hasPermission("staffplusplus.staffchat")) {
             StaffDataCache.loadStaff(player.getUniqueId());
-            //StaffMember joinedStaff = StaffDataCache.getOnlineStaff(player.getUniqueId());
-            //Bukkit.getLogger().info("[StaffPlusPlus] Loading " + joinedStaff.toString());
 
             String joinMessage = ChatColor.GREEN + player.getName() + " joined the game.";
             for (StaffMember staffMember : StaffDataCache.getAllOnlineStaff()){
@@ -50,8 +48,6 @@ public class PlayerJoinLeaveListener implements Listener {
     public void onPlayerQuit(PlayerQuitEvent event) {
         Player player = event.getPlayer();
         if (player.hasPermission("staffplusplus.staffchat")) {
-            //StaffMember leavingStaff = StaffDataCache.getOnlineStaff(player.getUniqueId());
-            //Bukkit.getLogger().info("[StaffPlusPlus] Unloading " + leavingStaff.toString());
             StaffDataCache.unloadStaff(player.getUniqueId());
 
             String leaveMessage = ChatColor.RED + player.getName() + " left the game.";

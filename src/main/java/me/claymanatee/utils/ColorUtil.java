@@ -3,8 +3,6 @@ package me.claymanatee.utils;
 import org.bukkit.ChatColor;
 
 import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
 
 public class ColorUtil {
 
@@ -23,9 +21,7 @@ public class ColorUtil {
         ArrayList<String> list = new ArrayList<String>();
         for (ChatColor color : ChatColor.values()) {
             if (color.isColor()) {
-                String colorCode = color.toString();
-                String colorChar = String.valueOf(color.getChar());
-                list.add(colorCode + colorChar);
+                list.add(color + String.valueOf(color.getChar()));
             }
         }
         return "Color Options: " + String.join(", ", list);

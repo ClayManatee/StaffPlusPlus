@@ -2,7 +2,8 @@ name: StaffPlusPlus
 version: '1.0-SNAPSHOT'
 main: me.claymanatee.staffPlusPlus.StaffPlusPlus
 api-version: '1.0'
-softdepend: ["Parties", "PlaceholderAPI"]
+depend: ["LuckPerms"]
+softdepend: ["EssentialsX", "Parties", "PlaceholderAPI"]
 commands:
   staffchat:
     usage: /<command>

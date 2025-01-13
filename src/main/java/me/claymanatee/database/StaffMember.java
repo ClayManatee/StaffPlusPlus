@@ -2,6 +2,7 @@ package me.claymanatee.database;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
 import java.util.UUID;
@@ -29,7 +30,6 @@ public class StaffMember {
     }
 
     public StaffMember(UUID staffUUID, ChatColor textColor, ChatColor accentColor, Boolean staffChatToggled) {
-        //Bukkit.getLogger().info("[StaffPlusPlus] Staff Member Constructor Version: ChatColor");
         this.staffUUID = staffUUID;
         this.textColor = textColor;
         this.accentColor = accentColor;
@@ -37,7 +37,6 @@ public class StaffMember {
     }
 
     public StaffMember(UUID staffUUID, String textColorChar, String accentColorChar, Boolean staffChatToggled) {
-        //Bukkit.getLogger().info("[StaffPlusPlus] Staff Member Constructor Version: String");
         this.staffUUID = staffUUID;
         this.staffChatToggled = staffChatToggled;
         this.setTextColorByChar(textColorChar);
@@ -57,6 +56,10 @@ public class StaffMember {
         return Bukkit.getPlayer(staffUUID).getName();
     }
 
+    public Player getPLayer() {
+        return Bukkit.getPlayer(staffUUID);
+    }
+
     public UUID getStaffUUID() {
         return staffUUID;
     }
@@ -70,7 +73,6 @@ public class StaffMember {
     }
 
     public String getTextColorChar() {
-        //Bukkit.getLogger().info("[StaffPlusPlus] Retrieving " + this.getName() + "'s text color: " + textColor.getChar());
         return String.valueOf(textColor.getChar());
     }
 
@@ -81,10 +83,8 @@ public class StaffMember {
     public void setTextColorByChar(String colorChar) {
         try {
             textColor = ChatColor.getByChar(colorChar);
-            //Bukkit.getLogger().info("[StaffPlusPlus] Updated " + this.getName() + " to text color " + colorChar);
         }
         catch (IllegalArgumentException e) {
-            //Bukkit.getLogger().warning("[StaffPlusPlus] Error loading text color with code " + colorChar);
             textColor = DEFAULT_TEXT_COLOR;
         }
     }
@@ -94,7 +94,6 @@ public class StaffMember {
     }
 
     public String getAccentColorChar() {
-        //Bukkit.getLogger().info("[StaffPlusPlus] Retrieving " + this.getName() + "'s accent color: " + accentColor.getChar());
         return String.valueOf(accentColor.getChar());
     }
 
@@ -105,10 +104,8 @@ public class StaffMember {
     public void setAccentColorByChar(String colorChar) {
         try {
             accentColor = ChatColor.getByChar(colorChar);
-            //Bukkit.getLogger().info("[StaffPlusPlus] Updated " + this.getName() + " to accent color " + colorChar);
         }
         catch (IllegalArgumentException e) {
-            //Bukkit.getLogger().warning("[StaffPlusPlus] Error loading text color with code " + colorChar);
             accentColor = DEFAULT_ACCENT_COLOR;
         }
     }

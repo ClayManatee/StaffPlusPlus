@@ -1,7 +1,6 @@
 package me.claymanatee.database;
 
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -52,7 +51,6 @@ public class StaffDataAccess {
             statement.setString(2, staffMember.getAccentColorChar());
             statement.setBoolean(3, staffMember.getStaffChatToggled());
             statement.setInt(4, staffMember.getId());
-            //Bukkit.getLogger().info("[StaffPlusPlus] Executing " + statement);
             statement.executeUpdate();
 
         } catch (SQLException ex) {
@@ -68,18 +66,15 @@ public class StaffDataAccess {
             preparedStatement = StaffDatabase.getConnection()
                     .prepareStatement("SELECT * FROM StaffMembers WHERE StaffUUID = ?");
             preparedStatement.setString(1, staffUUID.toString());
-
             ResultSet found = preparedStatement.executeQuery();
 
             while (found.next()) {
-                //Bukkit.getLogger().info("[StaffPlusPlus] Found staff: T - " + found.getString("TextColor") + "A - " + found.getString("AccentColor"));
                 staffMember = new StaffMember(
                         staffUUID,
                         found.getString("TextColor"),
                         found.getString("AccentColor"),
                         found.getBoolean("StaffChatToggled"));
                 staffMember.setId(found.getInt("StaffID"));
-                //Bukkit.getLogger().info("[StaffPlusPlus] Constructed staff member: " + staffMember);
             }
 
         } catch (SQLException e) {

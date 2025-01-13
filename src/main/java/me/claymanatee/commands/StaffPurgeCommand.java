@@ -1,11 +1,8 @@
 package me.claymanatee.commands;
 
-import me.claymanatee.database.StaffDataAccess;
 import me.claymanatee.database.StaffDataCache;
 import me.claymanatee.database.StaffDatabase;
-import me.claymanatee.database.StaffMember;
 import me.claymanatee.staffPlusPlus.StaffPlusPlus;
-import me.claymanatee.utils.StaffListUtil;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -28,13 +25,16 @@ public class StaffPurgeCommand implements CommandExecutor {
             return true;
         }
 
-        player.sendMessage("Purging staff database...");
+        player.sendMessage(StaffPlusPlus.getErrorColor() + "Purging staff database...");
+        StaffDataCache.unloadAllStaff();
         StaffDatabase.getStaffDataAccess().deleteAll();
-        player.sendMessage("Staff database purged.");
+        player.sendMessage(StaffPlusPlus.getErrorColor() + "Staff database purged.");
 
-        player.sendMessage("Re-registering online staff...");
+        //TODO: can someone send a message in staff chat right "now", when no record of them exists? w/ async, might be possible...
+
+        player.sendMessage(StaffPlusPlus.getErrorColor() + "Re-registering online staff...");
         StaffDataCache.loadAllStaff();
-        player.sendMessage("Online staff re-registered.");
+        player.sendMessage(StaffPlusPlus.getErrorColor() + "Online staff re-registered.");
         return true;
     }
 }
