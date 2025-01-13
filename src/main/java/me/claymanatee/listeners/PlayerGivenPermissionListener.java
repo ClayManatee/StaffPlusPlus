@@ -12,6 +12,9 @@ import net.luckperms.api.model.user.User;
 import net.luckperms.api.node.Node;
 import net.luckperms.api.node.NodeType;
 
+import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
+
 public class PlayerGivenPermissionListener {
     private final LuckPerms luckPerms;
 
@@ -35,7 +38,10 @@ public class PlayerGivenPermissionListener {
         }
         User user = (User) e.getTarget();
         if (node.getKey().equals("staffplusplus.staffchat")) {
-            StaffDataCache.loadStaff(user.getUniqueId());
+            Player p = Bukkit.getPlayer(user.getUniqueId());
+            if (p != null && p.isOnline()) {
+                StaffDataCache.loadStaff(p.getUniqueId());
+            }
         }
     }
 
@@ -49,7 +55,10 @@ public class PlayerGivenPermissionListener {
         }
         User user = (User) e.getTarget();
         if (node.getKey().equals("staffplusplus.staffchat")) {
-            StaffDataCache.unloadStaff(user.getUniqueId());
+            Player p = Bukkit.getPlayer(user.getUniqueId());
+            if (p != null && p.isOnline()) {
+                StaffDataCache.unloadStaff(p.getUniqueId());
+            }
             StaffDatabase.getStaffDataAccess().deleteByUUID(user.getUniqueId());
         }
     }
