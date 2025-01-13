@@ -41,7 +41,7 @@ A straightforward Bukkit/Spigot plugin to help your server's staff team chat pri
 - Gradle
 - Git
 
-# Build from source:
+# Build from Source
 Just clone this repo & use Gradle to build. Should look something like this from a CLI:
 ``` 
 git clone https://github.com/ClayManatee/StaffPlusPlus/
@@ -50,7 +50,7 @@ cd StaffPlusPlus
 ```
 The .jar generated should be in the /build folder!
 
-# Extra stuff:
+# Extra Stuff
 Many thanks to CreepyLemonz, creator of [Staffplus](https://github.com/CreepyLemonz/staffplus), for providing the basis for this whole plugin!
 
 WIP - feel free to contact me via email (claymanatee@gmail.com) or via Discord (claymanatee) with any questions. :D
