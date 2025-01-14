@@ -21,6 +21,7 @@ A straightforward Bukkit/Spigot plugin to help your server's staff team chat pri
     - These accept basic Bukkit ChatColor characters (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, a, b, c, d, e, f).
 - /stafflist (/sl) will show all online staff!
 - /staffroster is an admin-only command that will show info for all staff (online or not).
+  - Currently, the info is just a button that, when clicked, copies a staff member's UUID.
 - /staffdelete \<name | uuid\> is a WIP admin-only command to delete the info of a staff member from the database.
 - /staffpurge is an admin-only command to purge all staff data (but leave the database intact).
 
