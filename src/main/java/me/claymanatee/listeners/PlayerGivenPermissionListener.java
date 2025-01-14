@@ -23,9 +23,11 @@ public class PlayerGivenPermissionListener {
     }
 
     public void register() {
-        EventBus eventBus = this.luckPerms.getEventBus();
-        eventBus.subscribe(StaffPlusPlus.getPlugin(), NodeAddEvent.class, this::onNodeAdd);
-        eventBus.subscribe(StaffPlusPlus.getPlugin(), NodeRemoveEvent.class, this::onNodeRemove);
+        if (this.luckPerms != null) {
+            EventBus eventBus = this.luckPerms.getEventBus();
+            eventBus.subscribe(StaffPlusPlus.getPlugin(), NodeAddEvent.class, this::onNodeAdd);
+            eventBus.subscribe(StaffPlusPlus.getPlugin(), NodeRemoveEvent.class, this::onNodeRemove);
+        }
     }
 
     private void onNodeAdd(NodeAddEvent e) {

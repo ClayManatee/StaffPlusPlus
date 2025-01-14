@@ -22,7 +22,7 @@ public class StaffNotiUtil {
         if (p != null) {
             String senderName = p.getName();
             for (StaffMember staffMember : StaffDataCache.getAllOnlineStaff()) {
-                String msg = staffMember.getAccentColor() + senderName + staffMember.getTextColor() + ": " + message;
+                String msg = staffMember.getAccentColor() + senderName + staffMember.getTextColor() + " > " + message;
                 notify(staffMember, msg);
             }
         }
