@@ -6,6 +6,11 @@ import me.claymanatee.database.StaffMember;
 
 import com.earth2me.essentials.Essentials;
 
+import net.md_5.bungee.api.chat.ClickEvent;
+import net.md_5.bungee.api.chat.ComponentBuilder;
+import net.md_5.bungee.api.chat.HoverEvent;
+import net.md_5.bungee.api.chat.TextComponent;
+import net.md_5.bungee.api.chat.hover.content.Text;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -34,16 +39,40 @@ public class StaffListUtil {
     }
 
     public static void sendFullStaffRoster(StaffMember staffMember) {
-        StringBuilder staffRoster = new StringBuilder(staffMember.getTextColor() + "---[" + staffMember.getAccentColor() + "Full Staff Roster" + staffMember.getTextColor() + "]---");
+        ComponentBuilder staffRosterBuilder = new ComponentBuilder("").color(staffMember.getTextColor().asBungee())
+                .append("Full Staff Roster").color(staffMember.getAccentColor().asBungee())
+                .append("]---").color(staffMember.getTextColor().asBungee());
+        TextComponent staffRoster = new TextComponent(staffRosterBuilder.create());
+
         for(StaffMember sm : StaffDataAccess.findAll()){
             Player staffPlayer = Bukkit.getPlayer(sm.getStaffUUID());
             if(staffPlayer != null) {
-                staffRoster.append("\n" + staffMember.getAccentColor() + " - " + staffMember.getTextColor() + staffPlayer.getName());
+                TextComponent fullMessage = new TextComponent("\n- ");
+                fullMessage.setColor(staffMember.getAccentColor().asBungee());
+
+                TextComponent messageBody = new TextComponent(sm.getName());
+                messageBody.setColor(staffMember.getTextColor().asBungee());
+                fullMessage.addExtra(messageBody);
+
+                TextComponent breaker = new TextComponent(", ");
+                breaker.setColor(staffMember.getTextColor().asBungee());
+                fullMessage.addExtra(breaker);
+
+                TextComponent uuidLink = new TextComponent("Staff UUID");
+                uuidLink.setItalic(true);
+                uuidLink.setColor(staffMember.getAccentColor().asBungee());
+                uuidLink.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text(sm.getStaffUUID().toString())));
+                uuidLink.setClickEvent(new ClickEvent(ClickEvent.Action.COPY_TO_CLIPBOARD, sm.getStaffUUID().toString()));
+                fullMessage.addExtra(uuidLink);
+
+                staffRoster.addExtra(fullMessage);
             }
         }
+
         Player staffPlayer = Bukkit.getPlayer(staffMember.getStaffUUID());
         if(staffPlayer != null) {
-            staffPlayer.sendMessage(staffRoster.toString());
+            //staffPlayer.sendMessage(staffRoster.toString());
+            staffPlayer.spigot().sendMessage(staffRoster);
         }
     }
 }

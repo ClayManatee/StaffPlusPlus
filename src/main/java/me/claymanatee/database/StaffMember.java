@@ -56,7 +56,7 @@ public class StaffMember {
         return Bukkit.getPlayer(staffUUID).getName();
     }
 
-    public Player getPLayer() {
+    public Player getPlayer() {
         return Bukkit.getPlayer(staffUUID);
     }
 
