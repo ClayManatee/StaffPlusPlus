@@ -16,17 +16,22 @@ public class StaffDataCache {
         }
     }
 
-    public static void loadStaff(UUID staffUUID){
+    public static StaffMember loadStaff(UUID staffUUID){
         StaffMember staffMember = StaffDatabase.getStaffDataAccess().findByUUID(staffUUID);
         if (staffMember == null)
         {
             staffMember = StaffDatabase.getStaffDataAccess().insert(staffUUID);
         }
         onlineStaff.put(staffUUID, staffMember);
+        return staffMember;
     }
 
     public static StaffMember getOnlineStaff(UUID staffUUID){
-        return onlineStaff.get(staffUUID);
+        StaffMember staffMember = onlineStaff.get(staffUUID);
+        if (staffMember == null) {
+            staffMember = loadStaff(staffUUID);
+        }
+        return staffMember;
     }
 
     public static Collection<StaffMember> getAllOnlineStaff(){
