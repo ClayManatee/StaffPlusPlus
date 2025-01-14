@@ -49,7 +49,8 @@ public class StaffDataCache {
 
     public static void unloadAllStaff(){
         for(UUID staffUUID : onlineStaff.keySet()){
-            unloadStaff(staffUUID);
+            StaffDatabase.getStaffDataAccess().update(onlineStaff.get(staffUUID));
         }
+        onlineStaff.clear();
     }
 }

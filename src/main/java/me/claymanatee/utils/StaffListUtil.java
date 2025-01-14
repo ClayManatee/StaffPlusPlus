@@ -71,7 +71,6 @@ public class StaffListUtil {
 
         Player staffPlayer = Bukkit.getPlayer(staffMember.getStaffUUID());
         if(staffPlayer != null) {
-            //staffPlayer.sendMessage(staffRoster.toString());
             staffPlayer.spigot().sendMessage(staffRoster);
         }
     }
