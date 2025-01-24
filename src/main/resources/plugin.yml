@@ -7,23 +7,25 @@ softdepend: ["EssentialsX", "Parties", "PlaceholderAPI"]
 commands:
   staffchat:
     usage: /<command>
-    aliases:
-      - sch
-      - schat
+    aliases: [sch, schat]
+    permission: staffplusplus.staffchat
   stafflist:
     usage: /<command>
-    aliases:
-      - sl
+    aliases: [sl]
+    permission: staffplusplus.staffchat
   staffdelete:
     usage: /<command> [name]
+    permission: staffplusplus.admin
   staffroster:
     usage: /<command>
+    permission: staffplusplus.admin
   staffpurge:
     usage: /<command>
+    permission: staffplusplus.admin
 permissions:
   staffplusplus.staffchat:
     description: Allows usage of /staffchat and /stafflist commands
     default: false
   staffplusplus.admin:
-    description: Allows usage of /staffdelete and /staffroster commands
+    description: Allows usage of /staffroster, /staffdelete, and /staffpurge commands
     default: false
