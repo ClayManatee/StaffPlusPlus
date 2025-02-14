@@ -31,7 +31,9 @@ public class PlayerJoinLeaveListener implements Listener {
             for (StaffMember staffMember : StaffDataCache.getAllOnlineStaff()){
                 Player staffPlayer = Bukkit.getPlayer(staffMember.getStaffUUID());
                 if(staffPlayer != null) {
-                    staffPlayer.sendMessage(joinMessage);
+                    String customJoinMessage = StaffPlusPlus.getPluginHeader(staffMember.getTextColor(),
+                            staffMember.getAccentColor()) + joinMessage;
+                    staffPlayer.sendMessage(customJoinMessage);
                 }
             }
 
@@ -54,7 +56,9 @@ public class PlayerJoinLeaveListener implements Listener {
             for (StaffMember staffMember : StaffDataCache.getAllOnlineStaff()){
                 Player staffPlayer = Bukkit.getPlayer(staffMember.getStaffUUID());
                 if(staffPlayer != null) {
-                    staffPlayer.sendMessage(leaveMessage);
+                    String customLeaveMessage = StaffPlusPlus.getPluginHeader(staffMember.getTextColor(),
+                            staffMember.getAccentColor()) + leaveMessage;
+                    staffPlayer.sendMessage(customLeaveMessage);
                 }
             }
         }
