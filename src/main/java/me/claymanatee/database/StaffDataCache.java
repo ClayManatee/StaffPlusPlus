@@ -16,6 +16,23 @@ public class StaffDataCache {
         }
     }
 
+    public static boolean isLoadedStaff(UUID staffUUID){
+        return onlineStaff.containsKey(staffUUID);
+    }
+
+    public static boolean isSavedStaff(UUID staffUUID){
+        return StaffDatabase.getStaffDataAccess().findByUUID(staffUUID) != null;
+    }
+
+    public static void deleteStaff(UUID staffUUID){
+        if (isLoadedStaff(staffUUID)) {
+            onlineStaff.remove(staffUUID);
+        }
+        if (isSavedStaff(staffUUID)) {
+            StaffDatabase.getStaffDataAccess().deleteByUUID(staffUUID);
+        }
+    }
+
     public static StaffMember loadStaff(UUID staffUUID){
         StaffMember staffMember = StaffDatabase.getStaffDataAccess().findByUUID(staffUUID);
         if (staffMember == null)

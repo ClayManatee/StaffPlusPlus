@@ -1,19 +1,14 @@
 package me.claymanatee.listeners;
 
 import me.claymanatee.database.StaffDataCache;
-import me.claymanatee.database.StaffDatabase;
 import me.claymanatee.staffPlusPlus.StaffPlusPlus;
 
 import net.luckperms.api.LuckPerms;
 import net.luckperms.api.event.EventBus;
-import net.luckperms.api.event.node.NodeAddEvent;
-import net.luckperms.api.event.node.NodeRemoveEvent;
+import net.luckperms.api.event.user.UserDataRecalculateEvent;
 import net.luckperms.api.model.user.User;
-import net.luckperms.api.node.Node;
-import net.luckperms.api.node.NodeType;
 
 import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
 
 public class PlayerGivenPermissionListener {
     private final LuckPerms luckPerms;
@@ -25,43 +20,29 @@ public class PlayerGivenPermissionListener {
     public void register() {
         if (this.luckPerms != null) {
             EventBus eventBus = this.luckPerms.getEventBus();
-            eventBus.subscribe(StaffPlusPlus.getPlugin(), NodeAddEvent.class, this::onNodeAdd);
-            eventBus.subscribe(StaffPlusPlus.getPlugin(), NodeRemoveEvent.class, this::onNodeRemove);
+            eventBus.subscribe(StaffPlusPlus.getPlugin(), UserDataRecalculateEvent.class, this::onUserDataRecalculated);
         }
     }
 
-    private void onNodeAdd(NodeAddEvent e) {
-        if (!e.isUser()) {
-            return;
-        }
-        Node node = e.getNode();
-        if (node.getType() != NodeType.PERMISSION) {
-            return;
-        }
-        User user = (User) e.getTarget();
-        if (node.getKey().equals("staffplusplus.staffchat")) {
-            Player p = Bukkit.getPlayer(user.getUniqueId());
-            if (p != null && p.isOnline()) {
-                StaffDataCache.loadStaff(p.getUniqueId());
-            }
-        }
-    }
+    private void onUserDataRecalculated(UserDataRecalculateEvent e) {
+        User u = e.getUser();
+        boolean isOnline = Bukkit.getPlayer(u.getUniqueId()) != null;
+        boolean isStaff = e.getData().getPermissionData().checkPermission("staffplusplus.staffchat").asBoolean();
+        boolean isLoadedStaff = StaffDataCache.isLoadedStaff(u.getUniqueId());
+        boolean isSavedStaff = StaffDataCache.isSavedStaff(u.getUniqueId());
 
-    private void onNodeRemove(NodeRemoveEvent e) {
-        if (!e.isUser()) {
-            return;
-        }
-        Node node = e.getNode();
-        if (node.getType() != NodeType.PERMISSION) {
-            return;
-        }
-        User user = (User) e.getTarget();
-        if (node.getKey().equals("staffplusplus.staffchat")) {
-            Player p = Bukkit.getPlayer(user.getUniqueId());
-            if (p != null && p.isOnline()) {
-                StaffDataCache.unloadStaff(p.getUniqueId());
+        if (isOnline) {
+            if (!isLoadedStaff && isStaff) {
+                StaffDataCache.loadStaff(u.getUniqueId());
             }
-            StaffDatabase.getStaffDataAccess().deleteByUUID(user.getUniqueId());
+            else if (isLoadedStaff && !isStaff) {
+                StaffDataCache.deleteStaff(u.getUniqueId());
+            }
+        }
+        else {
+            if (isSavedStaff && !isStaff) {
+                StaffDataCache.deleteStaff(u.getUniqueId());
+            }
         }
     }
 }

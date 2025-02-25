@@ -40,6 +40,7 @@ public class StaffListUtil {
 
     public static void sendFullStaffRoster(StaffMember staffMember) {
         ComponentBuilder staffRosterBuilder = new ComponentBuilder("").color(staffMember.getTextColor().asBungee())
+                .append("---[").color(staffMember.getTextColor().asBungee())
                 .append("Full Staff Roster").color(staffMember.getAccentColor().asBungee())
                 .append("]---").color(staffMember.getTextColor().asBungee());
         TextComponent staffRoster = new TextComponent(staffRosterBuilder.create());
