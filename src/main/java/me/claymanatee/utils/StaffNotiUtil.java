@@ -21,7 +21,7 @@ public class StaffNotiUtil {
         Player p = Bukkit.getPlayer(sendingStaff.getStaffUUID());
         if (p != null) {
             String senderName = p.getName();
-            for (StaffMember staffMember : StaffDataCache.getAllOnlineStaff()) {
+            for (StaffMember staffMember : StaffDataCache.getAllLoadedStaff()) {
                 String msg = staffMember.getAccentColor() + senderName + staffMember.getTextColor() + " > " + message;
                 notify(staffMember, msg);
             }

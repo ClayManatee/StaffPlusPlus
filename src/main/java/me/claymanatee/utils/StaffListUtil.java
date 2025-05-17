@@ -20,7 +20,7 @@ public class StaffListUtil {
 
     public static void sendOnlineStaffList(StaffMember staffMember) {
         StringBuilder list = new StringBuilder(staffMember.getTextColor() + "---[" + staffMember.getAccentColor() + "Online Staff" + staffMember.getTextColor() + "]---");
-        for (StaffMember onlineStaffMember : StaffDataCache.getAllOnlineStaff()){
+        for (StaffMember onlineStaffMember : StaffDataCache.getAllLoadedStaff()){
             Player staffPlayer = Bukkit.getPlayer(onlineStaffMember.getStaffUUID());
             if(staffPlayer != null) {
                 String staffMemberInfo = "\n" + staffMember.getTextColor() + " - " + staffMember.getAccentColor() + staffPlayer.getName();
@@ -45,7 +45,7 @@ public class StaffListUtil {
                 .append("]---").color(staffMember.getTextColor().asBungee());
         TextComponent staffRoster = new TextComponent(staffRosterBuilder.create());
 
-        for(StaffMember sm : StaffDataAccess.findAll()){
+        for(StaffMember sm : StaffDataAccess.getAllStaff()){
             Player staffPlayer = Bukkit.getPlayer(sm.getStaffUUID());
             if(staffPlayer != null) {
                 TextComponent fullMessage = new TextComponent("\n- ");

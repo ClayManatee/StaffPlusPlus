@@ -19,8 +19,8 @@ public class PlayerChatListener implements Listener {
     @EventHandler
     public void onPlayerChat(BukkitPartiesPlayerPreChatEvent event) {
         UUID uuid =  event.getPartyPlayer().getPlayerUUID();
-        StaffMember staffMember = StaffDataCache.getOnlineStaff(uuid);
-        if (staffMember != null) {
+        if (StaffDataCache.isLoadedStaff(uuid)) {
+            StaffMember staffMember = StaffDataCache.getLoadedStaff(uuid);
             event.setCancelled(staffMember.getStaffChatToggled());
         }
     }
@@ -29,7 +29,7 @@ public class PlayerChatListener implements Listener {
     public void onPlayerChat(AsyncPlayerChatEvent event) {
         Player player = event.getPlayer();
         if (player.hasPermission("staffplusplus.staffchat")){
-            StaffMember staffMember = StaffDataCache.getOnlineStaff(player.getUniqueId());
+            StaffMember staffMember = StaffDataCache.loadStaff(player.getUniqueId());
             if (staffMember.getStaffChatToggled()) {
                 event.setCancelled(true);
                 StaffNotiUtil.notifyAll(staffMember, event.getMessage());

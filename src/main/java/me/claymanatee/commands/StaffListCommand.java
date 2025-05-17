@@ -26,7 +26,7 @@ public class StaffListCommand implements CommandExecutor {
             return true;
         }
 
-        StaffMember staffMember = StaffDataCache.getOnlineStaff(player.getUniqueId());
+        StaffMember staffMember = StaffDataCache.getLoadedStaff(player.getUniqueId());
         if (staffMember != null) {
             StaffListUtil.sendOnlineStaffList(staffMember);
         }

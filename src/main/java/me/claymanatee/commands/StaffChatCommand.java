@@ -30,7 +30,7 @@ public class StaffChatCommand implements CommandExecutor {
             return true;
         }
 
-        StaffMember staffMember = StaffDataCache.getOnlineStaff(player.getUniqueId());
+        StaffMember staffMember = StaffDataCache.loadStaff(player.getUniqueId());
 
         if (args.length == 0) {
             String message = StaffPlusPlus.getPluginHeader(staffMember.getTextColor(),
@@ -42,7 +42,7 @@ public class StaffChatCommand implements CommandExecutor {
 
         if (args[0].equalsIgnoreCase("toggle")) {
             staffMember.setStaffChatToggled(!staffMember.getStaffChatToggled());
-            StaffDataCache.updateOnlineStaff(staffMember);
+            StaffDataCache.updateLoadedStaff(staffMember);
 
             String message = StaffPlusPlus.getPluginHeader(staffMember.getTextColor(),
                     staffMember.getAccentColor());
@@ -79,7 +79,7 @@ public class StaffChatCommand implements CommandExecutor {
 
                 else {
                     staffMember.setTextColor(newColor);
-                    StaffDataCache.updateOnlineStaff(staffMember);
+                    StaffDataCache.updateLoadedStaff(staffMember);
 
                     String message = StaffPlusPlus.getPluginHeader(staffMember.getTextColor(),
                             staffMember.getAccentColor());
@@ -125,7 +125,7 @@ public class StaffChatCommand implements CommandExecutor {
 
                 else {
                     staffMember.setAccentColor(newColor);
-                    StaffDataCache.updateOnlineStaff(staffMember);
+                    StaffDataCache.updateLoadedStaff(staffMember);
 
                     String message = StaffPlusPlus.getPluginHeader(staffMember.getTextColor(),
                             staffMember.getAccentColor());

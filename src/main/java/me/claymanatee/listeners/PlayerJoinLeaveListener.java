@@ -4,6 +4,7 @@ import me.claymanatee.database.StaffDataCache;
 import me.claymanatee.staffPlusPlus.StaffPlusPlus;
 import me.claymanatee.database.StaffMember;
 import me.claymanatee.utils.StaffListUtil;
+import me.claymanatee.utils.StaffNotiUtil;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -25,19 +26,12 @@ public class PlayerJoinLeaveListener implements Listener {
     public void onPlayerJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
         if (player.hasPermission("staffplusplus.staffchat")) {
-            StaffDataCache.loadStaff(player.getUniqueId());
-
+            StaffMember staffMember = StaffDataCache.loadStaff(player.getUniqueId());
             String joinMessage = ChatColor.GREEN + player.getName() + " joined the game.";
-            for (StaffMember staffMember : StaffDataCache.getAllOnlineStaff()){
-                Player staffPlayer = Bukkit.getPlayer(staffMember.getStaffUUID());
-                if(staffPlayer != null) {
-                    String customJoinMessage = StaffPlusPlus.getPluginHeader(staffMember.getTextColor(),
-                            staffMember.getAccentColor()) + joinMessage;
-                    staffPlayer.sendMessage(customJoinMessage);
-                }
+            for (StaffMember otherStaffMember : StaffDataCache.getAllLoadedStaff()){
+                StaffNotiUtil.notify(otherStaffMember, joinMessage);
             }
 
-            StaffMember staffMember = StaffDataCache.getOnlineStaff(player.getUniqueId());
             if (staffMember != null) {
                 scheduler.runTaskLater(StaffPlusPlus.getPlugin(), () -> {
                     StaffListUtil.sendOnlineStaffList(staffMember);
@@ -51,15 +45,9 @@ public class PlayerJoinLeaveListener implements Listener {
         Player player = event.getPlayer();
         if (player.hasPermission("staffplusplus.staffchat")) {
             StaffDataCache.unloadStaff(player.getUniqueId());
-
             String leaveMessage = ChatColor.RED + player.getName() + " left the game.";
-            for (StaffMember staffMember : StaffDataCache.getAllOnlineStaff()){
-                Player staffPlayer = Bukkit.getPlayer(staffMember.getStaffUUID());
-                if(staffPlayer != null) {
-                    String customLeaveMessage = StaffPlusPlus.getPluginHeader(staffMember.getTextColor(),
-                            staffMember.getAccentColor()) + leaveMessage;
-                    staffPlayer.sendMessage(customLeaveMessage);
-                }
+            for (StaffMember otherStaffMember : StaffDataCache.getAllLoadedStaff()){
+                StaffNotiUtil.notify(otherStaffMember, leaveMessage);
             }
         }
     }

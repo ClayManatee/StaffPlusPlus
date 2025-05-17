@@ -27,13 +27,13 @@ public class StaffPurgeCommand implements CommandExecutor {
 
         player.sendMessage(StaffPlusPlus.getErrorColor() + "Purging staff database...");
         StaffDataCache.unloadAllStaff();
-        StaffDatabase.getStaffDataAccess().deleteAll();
+        StaffDatabase.getStaffDataAccess().deleteAllStaff();
         player.sendMessage(StaffPlusPlus.getErrorColor() + "Staff database purged.");
 
         //TODO: can someone send a message in staff chat right "now", when no record of them exists? w/ async, might be possible...
 
         player.sendMessage(StaffPlusPlus.getErrorColor() + "Re-registering online staff...");
-        StaffDataCache.loadAllStaff();
+        StaffDataCache.loadAllOnlineStaff();
         player.sendMessage(StaffPlusPlus.getErrorColor() + "Online staff re-registered.");
         return true;
     }

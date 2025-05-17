@@ -8,7 +8,7 @@ import java.util.*;
 public class StaffDataCache {
     private static final HashMap<UUID, StaffMember> onlineStaff = new HashMap<UUID, StaffMember>();
 
-    public static void loadAllStaff() {
+    public static void loadAllOnlineStaff() {
         for (Player p : Bukkit.getOnlinePlayers()) {
             if (p.hasPermission("staffplusplus.staffchat")) {
                 loadStaff(p.getUniqueId());
@@ -21,7 +21,7 @@ public class StaffDataCache {
     }
 
     public static boolean isSavedStaff(UUID staffUUID){
-        return StaffDatabase.getStaffDataAccess().findByUUID(staffUUID) != null;
+        return StaffDatabase.getStaffDataAccess().findStaffByUUID(staffUUID) != null;
     }
 
     public static void deleteStaff(UUID staffUUID){
@@ -29,49 +29,64 @@ public class StaffDataCache {
             onlineStaff.remove(staffUUID);
         }
         if (isSavedStaff(staffUUID)) {
-            StaffDatabase.getStaffDataAccess().deleteByUUID(staffUUID);
+            StaffDatabase.getStaffDataAccess().deleteStaffByUUID(staffUUID);
         }
     }
 
     public static StaffMember loadStaff(UUID staffUUID){
-        StaffMember staffMember = StaffDatabase.getStaffDataAccess().findByUUID(staffUUID);
+        if (isLoadedStaff(staffUUID)) {
+            return getLoadedStaff(staffUUID);
+        }
+        //
+        StaffMember staffMember = StaffDatabase.getStaffDataAccess().findStaffByUUID(staffUUID);
+        // if null, staff member has not been saved
         if (staffMember == null)
         {
-            staffMember = StaffDatabase.getStaffDataAccess().insert(staffUUID);
+            // check if this player has permission to staffchat
+            Player p = Bukkit.getPlayer(staffUUID);
+            if (p != null) {
+                boolean shouldBeStaff = p.hasPermission("staffplusplus.staffchat");
+                // if so, add them with the default settings
+                if (shouldBeStaff) {
+                    staffMember = StaffDatabase.getStaffDataAccess().insertDefaultStaff(staffUUID);
+                }
+            }
         }
-        onlineStaff.put(staffUUID, staffMember);
+        if (staffMember != null) {
+            // put staff member in onlineStaff & return
+            onlineStaff.put(staffUUID, staffMember);
+        }
         return staffMember;
     }
 
-    public static StaffMember getOnlineStaff(UUID staffUUID){
-        StaffMember staffMember = onlineStaff.get(staffUUID);
-        if (staffMember == null) {
-            staffMember = loadStaff(staffUUID);
+    public static StaffMember getLoadedStaff(UUID staffUUID){
+        if (!isLoadedStaff(staffUUID)){
+            return null;
         }
-        return staffMember;
+        return onlineStaff.get(staffUUID);
     }
 
-    public static Collection<StaffMember> getAllOnlineStaff(){
+    public static Collection<StaffMember> getAllLoadedStaff(){
         return onlineStaff.values();
     }
 
-    public static void updateOnlineStaff(StaffMember staffMember) {
+    public static void updateLoadedStaff(StaffMember staffMember) {
         if(onlineStaff.containsKey(staffMember.getStaffUUID())){
             onlineStaff.replace(staffMember.getStaffUUID(), staffMember);
         }
     }
 
     public static void unloadStaff(UUID staffUUID){
-        if(onlineStaff.containsKey(staffUUID)) {
+        if (onlineStaff.containsKey(staffUUID)) {
             StaffMember staffMember = onlineStaff.get(staffUUID);
-            StaffDatabase.getStaffDataAccess().update(staffMember);
+            StaffDatabase.getStaffDataAccess().updateStaff(staffMember);
             onlineStaff.remove(staffUUID);
         }
     }
 
     public static void unloadAllStaff(){
         for(UUID staffUUID : onlineStaff.keySet()){
-            StaffDatabase.getStaffDataAccess().update(onlineStaff.get(staffUUID));
+            StaffDatabase.getStaffDataAccess().updateStaff(onlineStaff.get(staffUUID));
         }
         onlineStaff.clear();
     }

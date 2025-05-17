@@ -45,7 +45,7 @@ public class StaffChatExpansion extends PlaceholderExpansion {
     public @Nullable String onPlaceholderRequest(Player player, @NotNull String params) {
         if (params.equals("staffchat_toggled")) {
             if (player.hasPermission("staffplusplus.staffchat")) {
-                StaffMember staffMember = StaffDataCache.getOnlineStaff(player.getUniqueId());
+                StaffMember staffMember = StaffDataCache.getLoadedStaff(player.getUniqueId());
                 if (staffMember != null) {
                     return (staffMember.getStaffChatToggled() ? "On" : "Off");
                 }

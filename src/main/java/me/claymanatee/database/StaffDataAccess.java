@@ -8,12 +8,12 @@ import java.util.UUID;
 
 public class StaffDataAccess {
 
-    public StaffMember insert(UUID staffUUID){
+    public StaffMember insertDefaultStaff(UUID staffUUID){
         StaffMember defaultStaffMember = new StaffMember(staffUUID);
-        return insert(defaultStaffMember);
+        return insertStaff(defaultStaffMember);
     }
 
-    public StaffMember insert(StaffMember staffMember){
+    public StaffMember insertStaff(StaffMember staffMember){
         try {
             PreparedStatement statement = StaffDatabase.getConnection()
                     .prepareStatement("INSERT INTO StaffMembers(StaffUUID, TextColor, AccentColor, StaffChatToggled) VALUES (?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
@@ -41,7 +41,7 @@ public class StaffDataAccess {
         return null;
     }
 
-    public void update(StaffMember staffMember){
+    public void updateStaff(StaffMember staffMember){
         PreparedStatement statement;
 
         try {
@@ -58,7 +58,7 @@ public class StaffDataAccess {
         }
     }
 
-    public StaffMember findByUUID(UUID staffUUID){
+    public StaffMember findStaffByUUID(UUID staffUUID){
         PreparedStatement preparedStatement;
         StaffMember staffMember = null;
 
@@ -84,7 +84,7 @@ public class StaffDataAccess {
         return staffMember;
     }
 
-    public static ArrayList<StaffMember> findAll() {
+    public static ArrayList<StaffMember> getAllStaff() {
 
         ArrayList<StaffMember> staffRoster = new ArrayList<>();
         PreparedStatement preparedStatement;
@@ -109,7 +109,7 @@ public class StaffDataAccess {
         return staffRoster;
     }
 
-    public void deleteByUUID(UUID staffUUID){
+    public void deleteStaffByUUID(UUID staffUUID){
         PreparedStatement preparedStatement;
 
         try {
@@ -124,7 +124,7 @@ public class StaffDataAccess {
         }
     }
 
-    public void deleteAll(){
+    public void deleteAllStaff(){
         PreparedStatement preparedStatement;
 
         try {
